@@ -48,3 +48,4 @@
 
 <p>Spur is released under the <a href="http://opensource.org/licenses/mit-license.php" title="MIT license">MIT license</a>. Please note that Joshua Granick's SpriteSheet and Motion library, Erin Catto's Box2D library, and TouchMyPixel's HXS library belong to their respective owner and are not a part of Spur. See their individual licenses for details.</p>
 
+
