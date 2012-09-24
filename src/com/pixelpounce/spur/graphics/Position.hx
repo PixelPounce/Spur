@@ -31,7 +31,7 @@ class Position implements IPosition
 	private var _y:Float;
 	private var _angle:Float;
 
-	public function new(x,y,angle=0) 
+	public function new(x:Float,y:Float,angle:Float=0) 
 	{
 		_x = x;
 		_y = y;

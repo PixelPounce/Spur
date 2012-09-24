@@ -150,6 +150,16 @@ class EntityManager implements IServiceProvider
 		
 		return true;
 	}
+	
+	public function hasEntity(entity:Int):Bool
+	{
+		return _entitiesIndex.exists(Std.string(entity));
+	}
+	
+	public function hasEntityByName(name:String):Bool
+	{
+		return _entityNameLookup.exists(name);
+	}
 
 	public function getAllComponentsOfType(type:Class<Dynamic>):List<Component>
 	{

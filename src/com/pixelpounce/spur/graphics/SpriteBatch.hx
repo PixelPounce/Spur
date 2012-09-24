@@ -70,7 +70,7 @@ class SpriteBatch extends Sprite
 		var index:Int = _drawList.length;
 		_drawList[index] = sprite.getX();
 		_drawList[index + 1] = sprite.getY();
-		_drawList[index + 2] = sprite.spriteFrame.frameIndex;
+		_drawList[index + 2] = sprite.currentFrame;
 		_drawList[index + 3] = sprite.scale;
 		_drawList[index + 4] = -sprite.getAngle();
 		_drawList[index + 5] = sprite.alpha;

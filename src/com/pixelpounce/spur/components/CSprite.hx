@@ -34,7 +34,7 @@ class CSprite extends Component
 	public var behaviourName(getBehaviour, setBehaviour):String;
 	public var currentBehaviourTotalFrames(default, null):Int;
 	private var _behaviourName:String;
-	public var currentFrame(default,null):Int;
+	public var currentFrame(default,default):Int;
 	public var play:Bool;
 	public var loop:Bool;
 	public var scale:Float;
@@ -64,6 +64,7 @@ class CSprite extends Component
 	{
 		_behaviourName = behaviour;
 		spriteFrame.frameIndex = 0;
+		spriteFrame.behaviour = _behaviourName;
 		return _behaviourName;
 	}
 	

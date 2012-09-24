@@ -83,6 +83,8 @@ class RenderSubsystem extends Subsystem
 			var spriteBatch:SpriteBatch = _spriteBatchCollecion.get(csprite.spriteFrame.spriteBatchName);
 			
 			var behaviourData:BehaviorData = spriteBatch.spritesheet.behaviors.get(csprite.spriteFrame.behaviour);
+			
+			csprite.currentFrame = behaviourData.frames[csprite.spriteFrame.frameIndex];
 
 			spriteBatch.addSprite(csprite);
 			
