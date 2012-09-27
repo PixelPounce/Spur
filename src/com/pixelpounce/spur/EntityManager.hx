@@ -40,6 +40,7 @@ class EntityManager implements IServiceProvider
 	private var _componentsPerTypeIndex:Hash<List<Component>>;
 	private var _entityNameLookup:Hash<Int>;
 	private var _groups:Hash<Hash<Bool>>;
+	private var _entityReverseNameLookup:Hash<String>;
 	
 
 	public function new() 
@@ -48,6 +49,7 @@ class EntityManager implements IServiceProvider
 		_entitiesIndex = new Hash < Hash<Component>>() ;
 		_componentsPerTypeIndex = new Hash<List<Component>>();
 		_entityNameLookup = new Hash<Int>();
+		_entityReverseNameLookup = new Hash<String>();
 		_groups = new Hash<Hash<Bool>>();
 	}
 	
@@ -62,9 +64,7 @@ class EntityManager implements IServiceProvider
 		var componentTypesPerEntity:Hash<Component> = _entitiesIndex.get(Std.string(component.entity));
 		
 		componentTypesPerEntity.set(Std.string(component.classType),component);
-		
-		
-		//add to another collection that allows fast retrieval of components per type
+
 		
 		if (!_componentsPerTypeIndex.exists(component.classType))
 		{
@@ -117,7 +117,6 @@ class EntityManager implements IServiceProvider
 		if (!_entitiesIndex.exists(Std.string(entity)))
 		{
 			throw "Entity " + Std.string(entity) + " does not exist in entitiesIndex";
-			//TODO throw error
 		}
 		
 		var componentTypesPerEntity:Hash<Component> = _entitiesIndex.get(Std.string(entity));
@@ -125,7 +124,6 @@ class EntityManager implements IServiceProvider
 		if (!componentTypesPerEntity.exists(className))
 		{
 			throw "Component type " +className + " does not exist in componentTypesPerEntity";
-			//TODO throw error
 		}
 		
 		return componentTypesPerEntity.get(className);
@@ -138,7 +136,6 @@ class EntityManager implements IServiceProvider
 		if (!_entitiesIndex.exists(Std.string(entity)))
 		{
 			return false;
-			//TODO throw error
 		}
 		
 		var componentTypesPerEntity:Hash<Component> = _entitiesIndex.get(Std.string(entity));
@@ -166,7 +163,6 @@ class EntityManager implements IServiceProvider
 		var className = Type.getClassName(type);
 		if (!_componentsPerTypeIndex.exists(className))
 		{
-			//TODO check to see if I can just return null here or NOT
 			return new List<Component>();
 		}
 		return _componentsPerTypeIndex.get(className);
@@ -177,14 +173,14 @@ class EntityManager implements IServiceProvider
 		
 		if (!_entitiesIndex.exists(Std.string(component.entity)))
 		{
-			//throw error
+			throw "Component does not belong to an entity";
 		}
 		
 		var componentTypesPerEntity:Hash<Component> = _entitiesIndex.get(Std.string(component.entity));
 		
 		if (!componentTypesPerEntity.exists(Std.string(component.classType)))
 		{
-			//throw error
+			throw "Component does not belong to entity " + Std.string(component.entity);
 		}
 		
 		componentTypesPerEntity.remove(Std.string(component.classType));
@@ -201,6 +197,7 @@ class EntityManager implements IServiceProvider
 	{
 		var newEntity:Int = generateNewEntityID();
 		_entityNameLookup.set(name, newEntity);
+		_entityReverseNameLookup.set(Std.string(newEntity), name);
 		
 		return newEntity;
 	}
@@ -230,7 +227,9 @@ class EntityManager implements IServiceProvider
 		}
 		
 		removeEntityFromAllGroups(entity);
-		//TODO entityNameLookup delete
+		var name:String = _entityReverseNameLookup.get(Std.string(entity));
+		_entityNameLookup.remove(name);
+		_entityReverseNameLookup.remove(Std.string(entity));
 	}
 	
 	private function generateNewEntityID():Int

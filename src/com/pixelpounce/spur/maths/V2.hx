@@ -96,7 +96,7 @@ class V2
 		return x * b.x + y * b.y;
 	}
 	
-	public function normalize(a:V2):V2
+	public function normalize():V2
 	{
 		var length:Float = magnitude();
 		x / length;
